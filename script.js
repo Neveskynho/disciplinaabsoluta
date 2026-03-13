@@ -413,3 +413,60 @@
     document.body.style.opacity = '1';
   }, 500);
 })();
+
+
+// ============================================================
+// 15. SALES POPUP (Simulador de Vendas)
+// ============================================================
+(function initSalesPopup() {
+  const popup = document.getElementById('salesPopup');
+  const nameEl = document.getElementById('salesName');
+  const timeEl = document.getElementById('salesTime');
+  const closeBtn = document.getElementById('salesClose');
+
+  if (!popup || !nameEl || !timeEl || !closeBtn) return;
+
+  const names = [
+    'João S.', 'Marcos T.', 'Ana C.', 'Pedro H.', 'Lucas M.',
+    'Bruno G.', 'Felipe P.', 'Rafael L.', 'Carlos E.', 'Gabriel R.',
+    'Thiago A.', 'Mateus F.', 'Fernando D.', 'Diego V.', 'Leonardo C.',
+    'Juliana F.', 'Camila V.', 'Roberto N.', 'Gustavo B.', 'Amanda P.'
+  ];
+
+  const times = [
+    'agora mesmo', 'há 2 minutos', 'há 5 minutos', 'há 10 minutos',
+    'há 15 minutos', 'há 22 minutos', 'há 34 minutos', 'há 45 minutos',
+    'há 1 hora', 'agora mesmo', 'agora mesmo', 'há 3 minutos'
+  ];
+
+  let timeoutId;
+
+  function showPopup() {
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    const randomTime = times[Math.floor(Math.random() * times.length)];
+
+    nameEl.textContent = randomName;
+    timeEl.textContent = randomTime;
+
+    popup.classList.add('show');
+
+    // Ocultar após 6 segundos
+    timeoutId = setTimeout(hidePopup, 6000);
+  }
+
+  function hidePopup() {
+    popup.classList.remove('show');
+    
+    // Próximo popup entre 12s e 32s
+    const nextTime = Math.floor(Math.random() * 20000) + 12000;
+    setTimeout(showPopup, nextTime);
+  }
+
+  closeBtn.addEventListener('click', () => {
+    clearTimeout(timeoutId);
+    hidePopup();
+  });
+
+  // Mostrar o primeiro popup após 4 segundos
+  setTimeout(showPopup, 4000);
+})();
